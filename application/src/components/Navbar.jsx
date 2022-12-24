@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import { routes } from "../routes";
 import { capitalize } from "../utils/text";
 
 const Navbar = () => {
+  useEffect(() => {
+    const lis = document.querySelectorAll(".links-li");
+    lis[0].firstElementChild.classList.add("active");
+  }, []);
+
+  const handleActiveLink = (e) => {
+    const activeEl = document.querySelector(".active");
+    activeEl.classList.remove("active");
+    e.currentTarget.className = "active";
+  };
+
   return (
     <>
       <header>
@@ -15,7 +26,9 @@ const Navbar = () => {
                 {routes.map((item, index) => {
                   return (
                     <li key={index} className="links-li">
-                      <Link to={item.path}>{capitalize(item.path)}</Link>
+                      <Link to={item.path} onClick={handleActiveLink}>
+                        {capitalize(item.path)}
+                      </Link>
                     </li>
                   );
                 })}
