@@ -1,4 +1,13 @@
 @import "reset";
 @import "navbar";
+@import "cars";
 @import "trucks";
 @import "buses";
+
+.card {
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-20px);
+}
