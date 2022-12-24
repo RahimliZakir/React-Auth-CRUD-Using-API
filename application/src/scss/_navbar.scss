@@ -1,0 +1,17 @@
+.active {
+  color: crimson;
+}
+
+nav {
+  padding: 1% 0 !important;
+  border-bottom: 1px solid #ededed;
+
+  .navbar-ul {
+    display: flex;
+    align-items: center;
+
+    li:not(:first-child) {
+      margin-left: 15%;
+    }
+  }
+}

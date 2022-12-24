@@ -27,7 +27,7 @@ const Truck = () => {
                   <Card.Img variant="top" src={item.imagePath} />
                   <Card.Body>
                     <Card.Title>Company: {item.company}</Card.Title>
-                    <Card.Text>Model: {item.model}</Card.Text>
+                    <Card.Text className="my-3">Model: {item.model}</Card.Text>
                     <Button variant="primary">Details</Button>
                   </Card.Body>
                 </Card>
@@ -35,7 +35,7 @@ const Truck = () => {
             );
           })}
         </Row>
-      </Container>{" "}
+      </Container>
     </section>
   );
 };
