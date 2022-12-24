@@ -1,0 +1,39 @@
+.loader-root {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+
+  .loader {
+    width: 75px;
+    height: 75px;
+    background: #fff;
+    border-radius: 50%;
+    position: relative;
+    animation: roll 1s ease-in-out infinite alternate;
+  }
+
+  .loader:after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 50%;
+    border: 5px solid;
+    border-color: #0d6efd transparent;
+  }
+
+  @keyframes roll {
+    0% {
+      transform: translateX(-150%) rotate(0deg);
+    }
+    100% {
+      transform: translateX(150%) rotate(360deg);
+    }
+  }
+}

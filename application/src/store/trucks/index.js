@@ -28,7 +28,7 @@ const truckSlice = createSlice({
         return { ...state, list: action.payload, loading: false };
       })
       .addCase(getAllTrucks.rejected, (state, action) => {
-        return { ...state, list: action.error, loading: false };
+        return { ...state, error: action.error, loading: false };
       });
   },
 });
