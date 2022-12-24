@@ -1,0 +1,8 @@
+#truck-section {
+  padding: 2.5% 0;
+}
+
+#truck-section .trucks-cards img {
+  height: 200px;
+  object-fit: cover;
+}
