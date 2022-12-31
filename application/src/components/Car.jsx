@@ -1,11 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
+import Details from "./Details";
 import { getAllCars } from "../store/cars";
 
 const Car = () => {
+  const [show, setShow] = useState(false);
+  const [car, setCar] = useState();
+
+  const handleShow = (data) => {
+    const filteredData = {
+      ...data,
+      carImages: [...data?.carImages]?.sort((a, b) =>
+        a.isMain === b.isMain ? 0 : a.isMain ? -1 : 1
+      ),
+    };
+    console.log(filteredData);
+    setCar(filteredData);
+    setShow(true);
+  };
+  const handleClose = () => setShow(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +36,7 @@ const Car = () => {
   const cars = list?.map((item) => {
     return {
       ...item,
-      carImages: item.carImages.filter((image) => image.isMain),
+      selectedImage: item.carImages.filter((image) => image.isMain),
     };
   });
 
@@ -42,13 +59,21 @@ const Car = () => {
               return (
                 <Col md={4} key={item.id} className="cars-cards mt-3">
                   <Card>
-                    <Card.Img variant="top" src={item.carImages[0].imagePath} />
+                    <Card.Img
+                      variant="top"
+                      src={item.selectedImage[0].imagePath}
+                    />
                     <Card.Body>
                       <Card.Title>Company: {item.company}</Card.Title>
                       <Card.Text className="my-3">
                         Model: {item.model}
                       </Card.Text>
-                      <Button variant="primary">Details</Button>
+                      <Button
+                        onClick={() => handleShow(item)}
+                        variant="primary"
+                      >
+                        Details
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -59,6 +84,7 @@ const Car = () => {
               There are no data.
             </Alert>
           )}
+          <Details show={show} handleClose={handleClose} data={car} />
         </Row>
       </Container>
     </section>

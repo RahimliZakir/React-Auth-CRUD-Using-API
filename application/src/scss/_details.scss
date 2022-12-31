@@ -1,0 +1,12 @@
+.modal-body {
+  img {
+    width: 100%;
+  }
+
+  .swiper-slide {
+    img {
+      height: 300px;
+      object-fit: cover;
+    }
+  }
+}

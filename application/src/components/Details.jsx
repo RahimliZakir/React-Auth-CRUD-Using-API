@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { formatDate } from "../utils/date";
 
 const Details = ({ show, handleClose, data }) => {
@@ -20,13 +22,21 @@ const Details = ({ show, handleClose, data }) => {
         </div>
       </Modal.Header>
       <Modal.Body>
-        <div className="img-div">
-          <img
-            style={{ width: "100%" }}
-            src={data?.imagePath}
-            alt="Details Img"
-          />
-        </div>
+        {data?.selectedImage == null ? (
+          <div className="img-div">
+            <img src={data?.imagePath} alt="Details Img" />
+          </div>
+        ) : (
+          <Swiper spaceBetween={50} slidesPerView={1} loop={true}>
+            {data?.carImages?.map((item) => {
+              return (
+                <SwiperSlide key={item?.id}>
+                  <img src={item?.imagePath} alt="Details Img" />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
