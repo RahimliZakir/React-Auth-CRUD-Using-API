@@ -1,11 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
+import Details from "./Details";
 import { getAllBuses } from "../store/buses";
 
 const Bus = () => {
+  const [show, setShow] = useState(false);
+  const [bus, setBus] = useState();
+
+  const handleShow = (data) => {
+    setBus(data);
+    setShow(true);
+  };
+  const handleClose = () => setShow(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,7 +51,12 @@ const Bus = () => {
                       <Card.Text className="my-3">
                         Model: {item.model}
                       </Card.Text>
-                      <Button variant="primary">Details</Button>
+                      <Button
+                        onClick={() => handleShow(item)}
+                        variant="primary"
+                      >
+                        Details
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -52,6 +67,7 @@ const Bus = () => {
               There are no data.
             </Alert>
           )}
+          <Details show={show} handleClose={handleClose} data={bus} />
         </Row>
       </Container>
     </section>
