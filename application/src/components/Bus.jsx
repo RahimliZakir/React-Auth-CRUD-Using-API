@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
-import Details from "./Details";
+import DynamicDetails from "./DynamicDetails";
 import { getAllBuses } from "../store/buses";
 
 const Bus = () => {
@@ -67,7 +67,7 @@ const Bus = () => {
               There are no data.
             </Alert>
           )}
-          <Details show={show} handleClose={handleClose} data={bus} />
+          <DynamicDetails show={show} handleClose={handleClose} data={bus} />
         </Row>
       </Container>
     </section>

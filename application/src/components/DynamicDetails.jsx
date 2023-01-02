@@ -5,7 +5,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { formatDate } from "../utils/date";
 
-const Details = ({ show, handleClose, data }) => {
+const DynamicDetails = ({ show, handleClose, data }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -47,4 +47,4 @@ const Details = ({ show, handleClose, data }) => {
   );
 };
 
-export default Details;
+export default DynamicDetails;
