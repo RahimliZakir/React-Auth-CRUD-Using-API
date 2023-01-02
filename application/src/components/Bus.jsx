@@ -4,7 +4,7 @@ import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
-import { getAllBuses } from "../store/buses";
+import { getAllBuses, deleteBus } from "../store/buses";
 
 const Bus = () => {
   const [show, setShow] = useState(false);
@@ -23,6 +23,10 @@ const Bus = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  const handleDeleteBus = (id) => {
+    dispatch(deleteBus(id));
+  };
 
   const { error, list, loading } = useSelector((state) => state.buses);
 
@@ -56,6 +60,13 @@ const Bus = () => {
                         variant="primary"
                       >
                         Details
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-1"
+                        onClick={() => handleDeleteBus(item.id)}
+                      >
+                        Delete
                       </Button>
                     </Card.Body>
                   </Card>

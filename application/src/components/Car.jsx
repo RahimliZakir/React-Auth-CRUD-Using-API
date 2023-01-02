@@ -4,7 +4,7 @@ import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
-import { getAllCars } from "../store/cars";
+import { getAllCars, deleteCar } from "../store/cars";
 
 const Car = () => {
   const [show, setShow] = useState(false);
@@ -30,6 +30,10 @@ const Car = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  const handleDeleteCar = (id) => {
+    dispatch(deleteCar(id));
+  };
 
   const { error, list, loading } = useSelector((state) => state.cars);
 
@@ -73,6 +77,13 @@ const Car = () => {
                         variant="primary"
                       >
                         Details
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-1"
+                        onClick={() => handleDeleteCar(item.id)}
+                      >
+                        Delete
                       </Button>
                     </Card.Body>
                   </Card>

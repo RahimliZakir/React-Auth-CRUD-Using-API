@@ -9,6 +9,18 @@ export const getAllCars = createAsyncThunk("/getallcars", async () => {
   return data;
 });
 
+//* 2) Delete
+export const deleteCar = createAsyncThunk(
+  "/deletecar",
+  async (id, { dispatch }) => {
+    const { data } = await API.delete(`/cars/${id}`);
+
+    await dispatch(getAllCars());
+
+    return data;
+  }
+);
+
 const initialState = {
   list: [],
   error: "",
@@ -28,6 +40,15 @@ const carsSlice = createSlice({
         return { ...state, list: action.payload, loading: false };
       })
       .addCase(getAllCars.rejected, (state, action) => {
+        return { ...state, error: action.error, loading: false };
+      })
+      .addCase(deleteCar.pending, (state) => {
+        return { ...state, loading: true };
+      })
+      .addCase(deleteCar.fulfilled, (state) => {
+        return { ...state, loading: false };
+      })
+      .addCase(deleteCar.rejected, (state, action) => {
         return { ...state, error: action.error, loading: false };
       });
   },

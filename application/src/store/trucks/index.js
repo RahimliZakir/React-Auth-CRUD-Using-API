@@ -9,6 +9,18 @@ export const getAllTrucks = createAsyncThunk("/getalltrucks", async () => {
   return data;
 });
 
+//* 2) Delete
+export const deleteTruck = createAsyncThunk(
+  "/deletetruck",
+  async (id, { dispatch }) => {
+    const { data } = await API.delete(`/trucks/${id}`);
+
+    await dispatch(getAllTrucks());
+
+    return data;
+  }
+);
+
 const initialState = {
   list: [],
   error: "",
@@ -28,6 +40,15 @@ const truckSlice = createSlice({
         return { ...state, list: action.payload, loading: false };
       })
       .addCase(getAllTrucks.rejected, (state, action) => {
+        return { ...state, error: action.error, loading: false };
+      })
+      .addCase(deleteTruck.pending, (state) => {
+        return { ...state, loading: true };
+      })
+      .addCase(deleteTruck.fulfilled, (state) => {
+        return { ...state, loading: false };
+      })
+      .addCase(deleteTruck.rejected, (state, action) => {
         return { ...state, error: action.error, loading: false };
       });
   },

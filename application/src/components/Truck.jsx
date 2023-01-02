@@ -4,7 +4,7 @@ import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
-import { getAllTrucks } from "../store/trucks";
+import { getAllTrucks, deleteTruck } from "../store/trucks";
 
 const Truck = () => {
   const [show, setShow] = useState(false);
@@ -23,6 +23,10 @@ const Truck = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  const handleDeleteTruck = (id) => {
+    dispatch(deleteTruck(id));
+  };
 
   const { error, list, loading } = useSelector((state) => state.trucks);
 
@@ -56,6 +60,13 @@ const Truck = () => {
                         variant="primary"
                       >
                         Details
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-1"
+                        onClick={() => handleDeleteTruck(item.id)}
+                      >
+                        Delete
                       </Button>
                     </Card.Body>
                   </Card>
