@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
@@ -24,8 +26,32 @@ const Truck = () => {
     // eslint-disable-next-line
   }, []);
 
+  const MySwal = withReactContent(Swal);
+
   const handleDeleteTruck = (id) => {
-    dispatch(deleteTruck(id));
+    MySwal.fire({
+      title: <h2>Silmək istədiyinizə əminsinizmi?</h2>,
+      html: <p>Bu qərar geri alınmayacaq!</p>,
+      icon: "warning",
+      confirmButtonText: "Sil",
+      showCancelButton: true,
+      cancelButtonColor: "#d33",
+      cancelButtonText: "İmtina",
+      didOpen: () => {
+        // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+        // MySwal.showLoading();
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteTruck(id));
+
+        return MySwal.fire(
+          "Uğurlu!",
+          "Seçilmiş məlumat uğurla silindi.",
+          "success"
+        );
+      }
+    });
   };
 
   const { error, list, loading } = useSelector((state) => state.trucks);
