@@ -19,7 +19,6 @@ const Car = () => {
         a.isMain === b.isMain ? 0 : a.isMain ? -1 : 1
       ),
     };
-    console.log(filteredData);
     setCar(filteredData);
     setShow(true);
   };

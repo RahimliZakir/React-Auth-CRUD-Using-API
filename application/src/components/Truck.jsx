@@ -6,6 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
+import Create from "./Create";
 import { getAllTrucks, deleteTruck } from "../store/trucks";
 
 const Truck = () => {
@@ -54,6 +55,12 @@ const Truck = () => {
     });
   };
 
+  const [createShow, setCreateShow] = useState(false);
+  const handleCreateShow = (data) => {
+    setCreateShow(true);
+  };
+  const handleCreateClose = () => setCreateShow(false);
+
   const { error, list, loading } = useSelector((state) => state.trucks);
 
   if (error)
@@ -68,6 +75,11 @@ const Truck = () => {
       <Container>
         <Row>
           <h2 className="text-center">Trucks</h2>
+          <div className="create-side">
+            <Button variant="success" onClick={handleCreateShow}>
+              Create
+            </Button>
+          </div>
           {loading ? (
             <Loader />
           ) : list?.length > 0 ? (
@@ -104,6 +116,7 @@ const Truck = () => {
               There are no data.
             </Alert>
           )}
+          <Create show={createShow} handleClose={handleCreateClose} />
           <DynamicDetails show={show} handleClose={handleClose} data={truck} />
         </Row>
       </Container>

@@ -21,6 +21,24 @@ export const deleteTruck = createAsyncThunk(
   }
 );
 
+//* 3) Create
+export const createTruck = createAsyncThunk(
+  "/createtruck",
+  async (truck, { dispatch }) => {
+    const result = await API.post("/trucks", truck, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(result);
+
+    await dispatch(getAllTrucks());
+
+    return result;
+  }
+);
+
 const initialState = {
   list: [],
   error: "",
@@ -49,6 +67,15 @@ const truckSlice = createSlice({
         return { ...state, loading: false };
       })
       .addCase(deleteTruck.rejected, (state, action) => {
+        return { ...state, error: action.error, loading: false };
+      })
+      .addCase(createTruck.pending, (state) => {
+        return { ...state, loading: true };
+      })
+      .addCase(createTruck.fulfilled, (state) => {
+        return { ...state, loading: false };
+      })
+      .addCase(createTruck.rejected, (state, action) => {
         return { ...state, error: action.error, loading: false };
       });
   },
