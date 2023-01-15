@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-import { useScript } from "../hooks/useScript";
 import { createTruck } from "../store/trucks";
 
 const Create = ({ show, handleClose }) => {
