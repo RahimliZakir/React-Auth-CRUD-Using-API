@@ -7,8 +7,12 @@ import Navbar from "./components/Navbar";
 import Car from "./components/Car";
 import Truck from "./components/Truck";
 import Bus from "./components/Bus";
+import { useImportScript } from "./hooks/useImportScript";
 
 const App = () => {
+  console.log("Ready");
+  useImportScript("./libs/js/image-input.js");
+
   return (
     <div className="App">
       <Routes>
