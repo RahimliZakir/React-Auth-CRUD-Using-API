@@ -116,7 +116,11 @@ const Truck = () => {
               There are no data.
             </Alert>
           )}
-          <Create show={createShow} handleClose={handleCreateClose} />
+          <Create
+            show={createShow}
+            handleClose={handleCreateClose}
+            componentName={"truck"}
+          />
           <DynamicDetails show={show} handleClose={handleClose} data={truck} />
         </Row>
       </Container>

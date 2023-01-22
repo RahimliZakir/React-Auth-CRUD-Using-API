@@ -31,8 +31,6 @@ export const createTruck = createAsyncThunk(
       },
     });
 
-    console.log(result);
-
     await dispatch(getAllTrucks());
 
     return result;

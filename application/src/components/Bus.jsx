@@ -6,6 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
+import Create from "./Create";
 import { getAllBuses, deleteBus } from "../store/buses";
 
 const Bus = () => {
@@ -54,6 +55,12 @@ const Bus = () => {
     });
   };
 
+  const [createShow, setCreateShow] = useState(false);
+  const handleCreateShow = (data) => {
+    setCreateShow(true);
+  };
+  const handleCreateClose = () => setCreateShow(false);
+
   const { error, list, loading } = useSelector((state) => state.buses);
 
   if (error)
@@ -68,6 +75,11 @@ const Bus = () => {
       <Container>
         <Row>
           <h2 className="text-center">Buses</h2>
+          <div className="create-side">
+            <Button variant="success" onClick={handleCreateShow}>
+              Create
+            </Button>
+          </div>
           {loading ? (
             <Loader />
           ) : list?.length > 0 ? (
@@ -104,6 +116,11 @@ const Bus = () => {
               There are no data.
             </Alert>
           )}
+          <Create
+            show={createShow}
+            handleClose={handleCreateClose}
+            componentName={"bus"}
+          />
           <DynamicDetails show={show} handleClose={handleClose} data={bus} />
         </Row>
       </Container>
