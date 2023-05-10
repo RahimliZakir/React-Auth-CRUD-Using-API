@@ -3,9 +3,11 @@ import { Modal, Button } from "react-bootstrap";
 
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { formatDate } from "../utils/date";
+import { useFormatDate } from "../hooks/useFormatDate";
 
 const DynamicDetails = ({ show, handleClose, data }) => {
+  const formatDate = useFormatDate();
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>

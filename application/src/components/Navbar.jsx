@@ -2,9 +2,11 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 import { routes } from "../routes";
-import { capitalize } from "../utils/text";
+import { useCapitalize } from "../hooks/useCapitalize";
 
 const Navbar = () => {
+  const capitalize = useCapitalize();
+
   return (
     <>
       <header>
