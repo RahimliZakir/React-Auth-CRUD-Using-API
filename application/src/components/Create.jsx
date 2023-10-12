@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 
 import { createTruck } from "../store/trucks";
 import { createBus } from "../store/buses";
-import { useImportScript } from "../hooks/importScript";
+
+import ImageInput from "./core/ImageInput";
 
 const Create = ({ show, handleClose, componentName }) => {
   const {
@@ -14,23 +15,6 @@ const Create = ({ show, handleClose, componentName }) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  useImportScript("./libs/js/image-input.js", show);
-
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   if (show) {
-  //     const script = document.createElement("script");
-  //     script.src = "./libs/js/image-input.js";
-  //     script.type = "text/javascript";
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   } else {
-  //     if (script !== undefined) {
-  //       console.log(document.body.children.tagName);
-  //     }
-  //   }
-  // }, [show]);
 
   const dispatch = useDispatch();
 
@@ -94,19 +78,7 @@ const Create = ({ show, handleClose, componentName }) => {
               )}
             </small>
           </div>
-          <div>
-            <label className="control-label">Şəkil</label>
-            <label className="image-input" htmlFor="File">
-              <input type="hidden" name="FileTemp" value="" />
-              <span>&times;</span>
-            </label>
-            <input
-              {...register("file")}
-              id="File"
-              type="file"
-              accept="image/x-png,image/gif,image/jpeg"
-            />
-          </div>
+          <ImageInput registerFunction={register} />
           <Button type="submit" variant="success">
             Add
           </Button>
