@@ -132,6 +132,7 @@ const Bus = () => {
             handleClose={handleCreateUpdateClose}
             componentName={"bus"}
             item={bus}
+            setItem={setBus}
           />
           <DynamicDetails show={show} handleClose={handleClose} data={bus} />
         </Row>

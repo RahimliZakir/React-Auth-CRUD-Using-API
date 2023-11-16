@@ -8,7 +8,7 @@ import { createBus, updateBus } from "../store/buses";
 
 import ImageInput from "./core/ImageInput";
 
-const CreateUpdate = ({ show, handleClose, componentName, item }) => {
+const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
   const {
     register,
     handleSubmit,
@@ -33,18 +33,20 @@ const CreateUpdate = ({ show, handleClose, componentName, item }) => {
       } else formData.append(key, data[key]);
     }
 
-    switch (componentName) {
-      case "truck":
-        dispatch(createTruck(formData));
-        break;
-      case "bus":
-        data !== undefined
-          ? dispatch(updateBus(formData))
-          : dispatch(createBus(formData));
-        break;
-      default:
-        break;
-    }
+    console.log(data)
+
+    // switch (componentName) {
+    //   case "truck":
+    //     dispatch(createTruck(formData));
+    //     break;
+    //   case "bus":
+    //     data !== undefined
+    //       ? dispatch(updateBus(formData))
+    //       : dispatch(createBus(formData));
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     customReset();
     handleClose();
@@ -56,6 +58,8 @@ const CreateUpdate = ({ show, handleClose, componentName, item }) => {
   };
 
   const customReset = () => {
+    setItem({});
+
     reset({
       model: "",
       company: "",
@@ -63,6 +67,8 @@ const CreateUpdate = ({ show, handleClose, componentName, item }) => {
       fileTemp: "",
     });
   };
+
+  console.log(item)
 
   return (
     <Modal show={show} onHide={closeModal}>

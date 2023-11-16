@@ -25,7 +25,7 @@ const ImageInput = ({ registerFunction, item }) => {
         htmlFor="File"
         style={{
           backgroundImage: `url(${
-            Object.keys(item).length > 0 ? item?.imagePath : ImageInputDefault
+            Object.values(item).length > 0 ? item?.imagePath : ImageInputDefault
           })`,
         }}
       >
