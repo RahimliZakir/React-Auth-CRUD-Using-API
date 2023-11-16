@@ -13,6 +13,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route
+            index
+            element={
+              <Suspense fallback={<Loader />}>
+                <Truck />
+              </Suspense>
+            }
+          />
+          <Route
             path="trucks"
             element={
               <Suspense fallback={<Loader />}>
