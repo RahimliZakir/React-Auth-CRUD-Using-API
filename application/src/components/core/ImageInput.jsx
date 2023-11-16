@@ -2,7 +2,7 @@ import "../../assets/css/image-input.css";
 
 import ImageInputDefault from "../../assets/images/image-input-default.png";
 
-const ImageInput = ({ registerFunction }) => {
+const ImageInput = ({ registerFunction, item }) => {
   const onChange = (e) => {
     const { files } = e.target;
 
@@ -23,12 +23,17 @@ const ImageInput = ({ registerFunction }) => {
       <label
         className="image-input"
         htmlFor="File"
-        style={{ backgroundImage: `url(${ImageInputDefault})` }}
+        style={{
+          backgroundImage: `url(${
+            Object.keys(item).length > 0 ? item?.imagePath : ImageInputDefault
+          })`,
+        }}
       >
-        <input type="hidden" name="FileTemp" />
+        <input {...registerFunction("fileTemp")} type="hidden" />
         <span>&times;</span>
       </label>
       <input
+        // Old way ↓
         // onChange={handleFile}
         {...registerFunction("file", {
           onChange,

@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
 import { createTruck } from "../store/trucks";
-import { createBus } from "../store/buses";
+import { createBus, updateBus } from "../store/buses";
 
 import ImageInput from "./core/ImageInput";
 
-const Create = ({ show, handleClose, componentName }) => {
+const CreateUpdate = ({ show, handleClose, componentName, item }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (Object.keys(item).length > 0) {
+      reset({ ...item, fileTemp: item?.imagePath });
+    }
+  }, [reset, item]);
 
   const dispatch = useDispatch();
 
@@ -32,21 +38,39 @@ const Create = ({ show, handleClose, componentName }) => {
         dispatch(createTruck(formData));
         break;
       case "bus":
-        dispatch(createBus(formData));
+        data !== undefined
+          ? dispatch(updateBus(formData))
+          : dispatch(createBus(formData));
         break;
       default:
         break;
     }
 
+    customReset();
     handleClose();
-    reset();
+  };
+
+  const closeModal = () => {
+    customReset();
+    handleClose();
+  };
+
+  const customReset = () => {
+    reset({
+      model: "",
+      company: "",
+      file: "",
+      fileTemp: "",
+    });
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={closeModal}>
       <Modal.Header closeButton>
         <div>
-          <Modal.Title>Create</Modal.Title>
+          <Modal.Title>
+            {Object.keys(item).length > 0 ? "Update" : "Create"}
+          </Modal.Title>
         </div>
       </Modal.Header>
       <Modal.Body>
@@ -69,7 +93,6 @@ const Create = ({ show, handleClose, componentName }) => {
               type="text"
               className="form-control"
               placeholder="Model"
-              name="model"
               {...register("model", { required: true })}
             />
             <small className="text-danger">
@@ -78,14 +101,14 @@ const Create = ({ show, handleClose, componentName }) => {
               )}
             </small>
           </div>
-          <ImageInput registerFunction={register} />
+          <ImageInput registerFunction={register} item={item} />
           <Button type="submit" variant="success">
-            Add
+            Save
           </Button>
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={closeModal}>
           Close
         </Button>
       </Modal.Footer>
@@ -93,4 +116,4 @@ const Create = ({ show, handleClose, componentName }) => {
   );
 };
 
-export default Create;
+export default CreateUpdate;

@@ -6,26 +6,39 @@ import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
-import Create from "./Create";
+import CreateUpdate from "./CreateUpdate";
 import { getAllBuses, deleteBus } from "../store/buses";
 
 const Bus = () => {
-  const [show, setShow] = useState(false);
-  const [bus, setBus] = useState();
-
-  const handleShow = (data) => {
-    setBus(data);
-    setShow(true);
-  };
-  const handleClose = () => setShow(false);
-
   const dispatch = useDispatch();
-
+  const { error, list, loading } = useSelector((state) => state.buses);
   useEffect(() => {
     dispatch(getAllBuses());
 
     // eslint-disable-next-line
   }, []);
+
+  const [bus, setBus] = useState({});
+  const [show, setShow] = useState(false);
+  const [createUpdateShow, setCreateUpdateShow] = useState(false);
+
+  const handlecreateUpdateShow = (data) => {
+    if (!data.target) {
+      setBus(data);
+    }
+
+    setCreateUpdateShow(true);
+  };
+  const handleCreateUpdateClose = () => {
+    setCreateUpdateShow(false);
+  };
+
+  const handleShow = (data) => {
+    setBus(data);
+
+    setShow(true);
+  };
+  const handleClose = () => setShow(false);
 
   const MySwal = withReactContent(Swal);
 
@@ -55,14 +68,6 @@ const Bus = () => {
     });
   };
 
-  const [createShow, setCreateShow] = useState(false);
-  const handleCreateShow = (data) => {
-    setCreateShow(true);
-  };
-  const handleCreateClose = () => setCreateShow(false);
-
-  const { error, list, loading } = useSelector((state) => state.buses);
-
   if (error)
     return (
       <Alert variant="danger" className="text-center">
@@ -76,7 +81,7 @@ const Bus = () => {
         <Row>
           <h2 className="text-center">Buses</h2>
           <div className="create-side">
-            <Button variant="success" onClick={handleCreateShow}>
+            <Button variant="success" onClick={handlecreateUpdateShow}>
               Create
             </Button>
           </div>
@@ -94,14 +99,20 @@ const Bus = () => {
                         Model: {item.model}
                       </Card.Text>
                       <Button
+                        variant="warning"
+                        onClick={() => handlecreateUpdateShow(item)}
+                      >
+                        Update
+                      </Button>
+                      <Button
                         onClick={() => handleShow(item)}
+                        className="mx-1"
                         variant="primary"
                       >
                         Details
                       </Button>
                       <Button
                         variant="danger"
-                        className="ms-1"
                         onClick={() => handleDeleteBus(item.id)}
                       >
                         Delete
@@ -116,10 +127,11 @@ const Bus = () => {
               There are no data.
             </Alert>
           )}
-          <Create
-            show={createShow}
-            handleClose={handleCreateClose}
+          <CreateUpdate
+            show={createUpdateShow}
+            handleClose={handleCreateUpdateClose}
             componentName={"bus"}
+            item={bus}
           />
           <DynamicDetails show={show} handleClose={handleClose} data={bus} />
         </Row>

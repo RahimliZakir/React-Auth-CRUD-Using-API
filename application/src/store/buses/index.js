@@ -37,6 +37,22 @@ export const createBus = createAsyncThunk(
   }
 );
 
+//* 4) Update
+export const updateBus = createAsyncThunk(
+  "/updatebus",
+  async (bus, { dispatch }) => {
+    const result = await API.put("/buses", bus, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    await dispatch(getAllBuses());
+
+    return result;
+  }
+);
+
 const initialState = {
   list: [],
   error: "",
@@ -74,6 +90,15 @@ const busSlice = createSlice({
         return { ...state, loading: false };
       })
       .addCase(createBus.rejected, (state, action) => {
+        return { ...state, error: action.error, loading: false };
+      })
+      .addCase(updateBus.pending, (state) => {
+        return { ...state, loading: true };
+      })
+      .addCase(updateBus.fulfilled, (state) => {
+        return { ...state, loading: false };
+      })
+      .addCase(updateBus.rejected, (state, action) => {
         return { ...state, error: action.error, loading: false };
       });
   },

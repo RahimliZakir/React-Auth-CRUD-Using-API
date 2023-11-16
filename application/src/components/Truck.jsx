@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
-import Create from "./Create";
+import CreateUpdate from "./CreateUpdate";
 import { getAllTrucks, deleteTruck } from "../store/trucks";
 
 const Truck = () => {
@@ -116,7 +116,7 @@ const Truck = () => {
               There are no data.
             </Alert>
           )}
-          <Create
+          <CreateUpdate
             show={createShow}
             handleClose={handleCreateClose}
             componentName={"truck"}
