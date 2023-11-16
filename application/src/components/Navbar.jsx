@@ -14,9 +14,6 @@ const Navbar = () => {
           <nav className="navbar navbar-expand-lg bg-light">
             <div className="container-fluid">
               <ul className="navbar-ul">
-                <li>
-                  <NavLink to="/">Cars</NavLink>
-                </li>
                 {routes.map((item) => {
                   return (
                     <li key={item.path}>

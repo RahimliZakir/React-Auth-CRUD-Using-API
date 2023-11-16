@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
-import Car from "./components/Car";
 import Truck from "./components/Truck";
 import Bus from "./components/Bus";
 
@@ -13,22 +12,6 @@ const App = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={<Navbar />}>
-          <Route
-            index
-            element={
-              <Suspense fallback={<Loader />}>
-                <Car />
-              </Suspense>
-            }
-          />
-          <Route
-            path="cars"
-            element={
-              <Suspense fallback={<Loader />}>
-                <Car />
-              </Suspense>
-            }
-          />
           <Route
             path="trucks"
             element={

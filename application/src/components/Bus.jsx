@@ -22,7 +22,7 @@ const Bus = () => {
   const [show, setShow] = useState(false);
   const [createUpdateShow, setCreateUpdateShow] = useState(false);
 
-  const handlecreateUpdateShow = (data) => {
+  const handleCreateUpdateShow = (data) => {
     if (!data.target) {
       setBus(data);
     }
@@ -44,13 +44,13 @@ const Bus = () => {
 
   const handleDeleteBus = (id) => {
     MySwal.fire({
-      title: <h2>Silmək istədiyinizə əminsinizmi?</h2>,
-      html: <p>Bu qərar geri alınmayacaq!</p>,
+      title: <h2>Are you sure?</h2>,
+      html: <p>You won't be able to revert this!</p>,
       icon: "warning",
-      confirmButtonText: "Sil",
+      confirmButtonText: "Yes, delete it!",
       showCancelButton: true,
       cancelButtonColor: "#d33",
-      cancelButtonText: "İmtina",
+      cancelButtonText: "Cancel",
       didOpen: () => {
         // `MySwal` is a subclass of `Swal` with all the same instance & static methods
         // MySwal.showLoading();
@@ -60,8 +60,8 @@ const Bus = () => {
         dispatch(deleteBus(id));
 
         return MySwal.fire(
-          "Uğurlu!",
-          "Seçilmiş məlumat uğurla silindi.",
+          "Deleted!",
+          "Your file has been deleted.",
           "success"
         );
       }
@@ -81,7 +81,7 @@ const Bus = () => {
         <Row>
           <h2 className="text-center">Buses</h2>
           <div className="create-side">
-            <Button variant="success" onClick={handlecreateUpdateShow}>
+            <Button variant="success" onClick={handleCreateUpdateShow}>
               Create
             </Button>
           </div>
@@ -100,7 +100,7 @@ const Bus = () => {
                       </Card.Text>
                       <Button
                         variant="warning"
-                        onClick={() => handlecreateUpdateShow(item)}
+                        onClick={() => handleCreateUpdateShow(item)}
                       >
                         Update
                       </Button>

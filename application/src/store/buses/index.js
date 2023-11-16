@@ -41,7 +41,7 @@ export const createBus = createAsyncThunk(
 export const updateBus = createAsyncThunk(
   "/updatebus",
   async (bus, { dispatch }) => {
-    const result = await API.put("/buses", bus, {
+    const result = await API.put(`/buses/${bus.id}`, bus, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

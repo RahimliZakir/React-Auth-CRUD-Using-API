@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
-import { createTruck } from "../store/trucks";
+import { createTruck, updateTruck } from "../store/trucks";
 import { createBus, updateBus } from "../store/buses";
 
 import ImageInput from "./core/ImageInput";
@@ -15,6 +15,8 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const formRef = useRef(null);
 
   useEffect(() => {
     if (Object.keys(item).length > 0) {
@@ -33,20 +35,24 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
       } else formData.append(key, data[key]);
     }
 
-    console.log(data)
+    // formData.forEach((value, name) => {
+    //   console.log(`${name}: ${value}`);
+    // });
 
-    // switch (componentName) {
-    //   case "truck":
-    //     dispatch(createTruck(formData));
-    //     break;
-    //   case "bus":
-    //     data !== undefined
-    //       ? dispatch(updateBus(formData))
-    //       : dispatch(createBus(formData));
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (componentName) {
+      case "truck":
+        Object.keys(item).length > 0
+          ? dispatch(updateTruck(formData))
+          : dispatch(createTruck(formData));
+        break;
+      case "bus":
+        Object.keys(item).length > 0
+          ? dispatch(updateBus(formData))
+          : dispatch(createBus(formData));
+        break;
+      default:
+        break;
+    }
 
     customReset();
     handleClose();
@@ -61,14 +67,12 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
     setItem({});
 
     reset({
-      model: "",
       company: "",
+      model: "",
       file: "",
       fileTemp: "",
     });
   };
-
-  console.log(item)
 
   return (
     <Modal show={show} onHide={closeModal}>
@@ -80,7 +84,7 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
         </div>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <input
               type="text"
