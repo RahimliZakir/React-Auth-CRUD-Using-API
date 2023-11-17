@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
 import CreateUpdate from "./CreateUpdate";
+
 import { getAllTrucks, deleteTruck } from "../store/trucks";
+import { useDeleteEntity } from "../hooks/useDeleteEntity";
 
 const Truck = () => {
   const dispatch = useDispatch();
@@ -40,33 +40,8 @@ const Truck = () => {
   };
   const handleClose = () => setShow(false);
 
-  const MySwal = withReactContent(Swal);
+  const deleteEntity = useDeleteEntity();
 
-  const handleDeleteTruck = (id) => {
-    MySwal.fire({
-      title: <h2>Are you sure?</h2>,
-      html: <p>You won't be able to revert this!</p>,
-      icon: "warning",
-      confirmButtonText: "Yes, delete it!",
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancel",
-      didOpen: () => {
-        // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-        // MySwal.showLoading();
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteTruck(id));
-
-        return MySwal.fire(
-          "Deleted!",
-          "Your file has been deleted.",
-          "success"
-        );
-      }
-    });
-  };
   if (error)
     return (
       <Alert variant="danger" className="text-center">
@@ -112,7 +87,7 @@ const Truck = () => {
                       </Button>
                       <Button
                         variant="danger"
-                        onClick={() => handleDeleteTruck(item.id)}
+                        onClick={() => deleteEntity(item.id, deleteTruck)}
                       >
                         Delete
                       </Button>

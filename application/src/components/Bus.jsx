@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Button, Col, Row, Container, Alert } from "react-bootstrap";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import Loader from "./Loader";
 import DynamicDetails from "./DynamicDetails";
 import CreateUpdate from "./CreateUpdate";
+
 import { getAllBuses, deleteBus } from "../store/buses";
+import { useDeleteEntity } from "../hooks/useDeleteEntity";
 
 const Bus = () => {
   const dispatch = useDispatch();
@@ -40,33 +40,8 @@ const Bus = () => {
   };
   const handleClose = () => setShow(false);
 
-  const MySwal = withReactContent(Swal);
-
-  const handleDeleteBus = (id) => {
-    MySwal.fire({
-      title: <h2>Are you sure?</h2>,
-      html: <p>You won't be able to revert this!</p>,
-      icon: "warning",
-      confirmButtonText: "Yes, delete it!",
-      showCancelButton: true,
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Cancel",
-      didOpen: () => {
-        // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-        // MySwal.showLoading();
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteBus(id));
-
-        return MySwal.fire(
-          "Deleted!",
-          "Your file has been deleted.",
-          "success"
-        );
-      }
-    });
-  };
+  //* Custom React Hook for deleting selected entity
+  const deleteEntity = useDeleteEntity();
 
   if (error)
     return (
@@ -113,7 +88,7 @@ const Bus = () => {
                       </Button>
                       <Button
                         variant="danger"
-                        onClick={() => handleDeleteBus(item.id)}
+                        onClick={() => deleteEntity(item.id, deleteBus)}
                       >
                         Delete
                       </Button>
