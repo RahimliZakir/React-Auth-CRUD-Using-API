@@ -7,11 +7,31 @@ import Navbar from "./components/Navbar";
 import Truck from "./components/Truck";
 import Bus from "./components/Bus";
 
+import Register from "./components/auth/Register";
+import SignIn from "./components/auth/SignIn";
+
 const App = () => {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Navbar />}>
+          <Route
+            path="register"
+            element={
+              <Suspense fallback={<Loader />}>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route
+            path="signin"
+            element={
+              <Suspense fallback={<Loader />}>
+                <SignIn />
+              </Suspense>
+            }
+          />
+
           <Route
             index
             element={
