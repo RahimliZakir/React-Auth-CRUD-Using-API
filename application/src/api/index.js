@@ -1,16 +1,23 @@
 import axios from "axios";
 
-export default axios.create({
+const instance = axios.create({
   baseURL: "https://localhost:7074/api",
 });
 
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("user");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const user = localStorage.getItem("user");
+    console.log(user);
+    if (user) {
+      const token = JSON.parse(user)?.data?.accessToken;
+      
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
+
+export default instance;

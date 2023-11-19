@@ -13,10 +13,10 @@ export const useAuth = () => {
         if (resp.status === 200)
           localStorage.setItem(
             "user",
-            JSON.stringify(resp.data.data.accessToken)
+            JSON.stringify(resp.data)
           );
 
-        return resp.data.data.accessToken;
+        return resp.data;
       })
       .catch((err) => console.log(err));
   };
