@@ -11,10 +11,7 @@ export const useAuth = () => {
     return API.post(`${API_URL}/signin`, formData)
       .then((resp) => {
         if (resp.status === 200)
-          localStorage.setItem(
-            "user",
-            JSON.stringify(resp.data)
-          );
+          localStorage.setItem("user", JSON.stringify(resp.data));
 
         return resp.data;
       })
@@ -25,6 +22,10 @@ export const useAuth = () => {
     return JSON.parse(localStorage.getItem("user"));
   };
 
+  const hasToken = () => {
+    return localStorage.getItem("user") !== null;
+  };
+
   const logout = () => {
     localStorage.removeItem("user");
   };
@@ -33,6 +34,7 @@ export const useAuth = () => {
     register,
     signIn,
     getCurrentUser,
+    hasToken,
     logout,
   };
 };
