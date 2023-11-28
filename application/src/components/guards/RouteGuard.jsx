@@ -13,7 +13,7 @@ const RouteGuard = ({ component: Component }) => {
       <Component />
     </Suspense>
   ) : (
-    <Navigate to="/signin" />
+    <Navigate to="/" />
   );
 };
 

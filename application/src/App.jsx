@@ -1,21 +1,30 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
-import Truck from "./components/Truck";
-import Bus from "./components/Bus";
 
 import Register from "./components/auth/Register";
 import SignIn from "./components/auth/SignIn";
 
 import RouteGuard from "./components/guards/RouteGuard";
 
+const Truck = lazy(() => import("./components/Truck"));
+const Bus = lazy(() => import("./components/Bus"));
+
 const App = () => {
   return (
     <div className="App">
       <Routes>
+        <Route
+          index
+          element={
+            <Suspense fallback={<Loader />}>
+              <SignIn />
+            </Suspense>
+          }
+        />
         <Route
           path="register"
           element={
@@ -24,14 +33,7 @@ const App = () => {
             </Suspense>
           }
         />
-        <Route
-          path="signin"
-          element={
-            <Suspense fallback={<Loader />}>
-              <SignIn />
-            </Suspense>
-          }
-        />
+
         <Route path="/" element={<Navbar />}>
           <Route index element={<RouteGuard component={Truck} />} />
           <Route path="trucks" element={<RouteGuard component={Truck} />} />
