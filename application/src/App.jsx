@@ -35,7 +35,6 @@ const App = () => {
         />
 
         <Route path="/" element={<Navbar />}>
-          <Route index element={<RouteGuard component={Truck} />} />
           <Route path="trucks" element={<RouteGuard component={Truck} />} />
           <Route path="buses" element={<RouteGuard component={Bus} />} />
           <Route path="*" element={<NotFound />} />

@@ -20,4 +20,6 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+instance.interceptors.response.use(());
+
 export default instance;
