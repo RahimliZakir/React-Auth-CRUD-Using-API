@@ -1,47 +1,62 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import { useAuth } from "../../hooks/useAuth";
 
 const SignIn = () => {
   const auth = useAuth();
 
-  const [signInData, setSignInData] = useState({
-    username: "",
-    password: "",
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required("username is required"),
+      password: Yup.string()
+        .required("password is required")
+        .min(8, "password must be a minimum of 8 characters"),
+    }),
+    onSubmit: (values) => {
+      auth.signIn(values);
+    },
   });
-
-  const handleInputChange = (item, e) => {
-    setSignInData({ ...signInData, [item]: e.target.value });
-  };
-
-  const handleSignIn = (e) => {
-    e.preventDefault();
-
-    auth.signIn(signInData);
-  };
 
   return (
     <Container>
       <Row className="vh-100 align-items-center justify-content-center">
         <div className="col-8">
           <h1 className="text-center mb-3">Sign In Page</h1>
-          <form onSubmit={handleSignIn} className="mb-3">
+          <form onSubmit={formik.handleSubmit} className="mb-3">
             <input
               type="text"
               className="form-control mb-2"
               placeholder="username"
-              value={signInData.username}
-              onChange={(e) => handleInputChange("username", e)}
+              name="username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
             />
+            {formik.touched.username && formik.errors.username && (
+              <div className="text-danger mb-2">{formik.errors.username}</div>
+            )}
+
             <input
               type="password"
               className="form-control  mb-2"
               placeholder="password"
-              value={signInData.password}
-              onChange={(e) => handleInputChange("password", e)}
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
+            {formik.touched.password && formik.errors.password && (
+              <div className="text-danger mb-2">{formik.errors.password}</div>
+            )}
+
             <button type="submit" className="btn btn-success">
               Sign In
             </button>
