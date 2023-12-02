@@ -2,9 +2,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import API from "../api";
+import { API_ACCOUNT_URL } from "../constants";
 
 export const useAuth = () => {
-  const API_URL = `${API.defaults.baseURL}/account`;
+  const API_URL = API_ACCOUNT_URL;
 
   const navigate = useNavigate();
 
