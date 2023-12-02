@@ -1,15 +1,14 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer } from "react-toastify";
 
 import { useAuth } from "../../hooks/useAuth";
 
 const SignIn = () => {
   const auth = useAuth();
-
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -24,8 +23,6 @@ const SignIn = () => {
     }),
     onSubmit: (values) => {
       auth.signIn(values);
-
-      navigate("/trucks");
     },
   });
 
@@ -33,6 +30,7 @@ const SignIn = () => {
     <Container>
       <Row className="vh-100 align-items-center justify-content-center">
         <div className="col-8">
+          <ToastContainer />
           <h1 className="text-center mb-3">Sign In Page</h1>
           <form onSubmit={formik.handleSubmit} className="mb-3">
             <input

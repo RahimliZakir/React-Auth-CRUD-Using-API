@@ -11,7 +11,16 @@ nav {
     align-items: center;
 
     li:not(:first-child) {
-      margin-left: 15%;
+      margin-left: 3%;
+    }
+  }
+
+  .logout-btn {
+    color: #0d6efd;
+    transition: 0.3s;
+
+    &:hover {
+      color: crimson;
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -8,12 +8,8 @@ import { useAuth } from "../../hooks/useAuth";
 const Register = () => {
   const auth = useAuth();
 
-  const navigate = useNavigate();
-
   const handleRegister = (values, { resetForm }) => {
     auth.register(values);
-
-    navigate("/");
   };
 
   return (

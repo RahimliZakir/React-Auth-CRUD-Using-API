@@ -34,7 +34,7 @@ const App = () => {
           }
         />
 
-        <Route path="/" element={<Navbar />}>
+        <Route path="main" element={<Navbar />}>
           <Route path="trucks" element={<RouteGuard component={Truck} />} />
           <Route path="buses" element={<RouteGuard component={Bus} />} />
           <Route path="*" element={<NotFound />} />

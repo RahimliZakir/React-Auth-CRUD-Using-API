@@ -1,21 +1,42 @@
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import API from "../api";
 
 export const useAuth = () => {
   const API_URL = `${API.defaults.baseURL}/account`;
 
+  const navigate = useNavigate();
+
   const register = (formData) => {
-    return API.post(`${API_URL}/register`, formData);
+    return API.post(`${API_URL}/register`, formData)
+      .then((resp) => {
+        if (resp.status === 200) {
+          navigate("/");
+        }
+
+        return resp.data;
+      })
+      .catch((err) => console.log(err));
   };
 
   const signIn = (formData) => {
     return API.post(`${API_URL}/signin`, formData)
       .then((resp) => {
-        if (resp.status === 200)
+        if (resp.status === 200) {
           localStorage.setItem("user", JSON.stringify(resp.data));
+          navigate("/main/trucks");
+        }
 
         return resp.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response) {
+          toast.error(err.response.data, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+        } else console.log(err);
+      });
   };
 
   const getCurrentUser = () => {
@@ -28,6 +49,8 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem("user");
+
+    navigate("/");
   };
 
   return {
