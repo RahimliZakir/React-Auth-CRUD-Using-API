@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
@@ -40,6 +41,8 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+
+      <ToastContainer />
     </div>
   );
 };

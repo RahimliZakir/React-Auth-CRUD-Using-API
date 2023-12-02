@@ -3,7 +3,6 @@ import { Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer } from "react-toastify";
 
 import { useAuth } from "../../hooks/useAuth";
 
@@ -30,7 +29,6 @@ const SignIn = () => {
     <Container>
       <Row className="vh-100 align-items-center justify-content-center">
         <div className="col-8">
-          <ToastContainer />
           <h1 className="text-center mb-3">Sign In Page</h1>
           <form onSubmit={formik.handleSubmit} className="mb-3">
             <input

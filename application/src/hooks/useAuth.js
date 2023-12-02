@@ -17,7 +17,13 @@ export const useAuth = () => {
 
         return resp.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response) {
+          toast.error(err.response.data.message, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+        } else console.log(err);
+      });
   };
 
   const signIn = (formData) => {
@@ -32,7 +38,7 @@ export const useAuth = () => {
       })
       .catch((err) => {
         if (err.response) {
-          toast.error(err.response.data, {
+          toast.error(err.response.data.message, {
             position: toast.POSITION.BOTTOM_RIGHT,
           });
         } else console.log(err);
