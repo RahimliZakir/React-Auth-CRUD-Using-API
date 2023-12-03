@@ -21,28 +21,43 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  async (config) => {
-    const user = localStorage.getItem("user");
+  (config) => config,
+  async (error) => {
+    const originalRequest = error.config;
 
-    if (user) {
-      const accessToken = JSON.parse(user)?.data?.accessToken;
-      const refreshToken = JSON.parse(user)?.data?.refreshToken;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-      try {
-        const data = await instance.post(`${API_ACCOUNT_URL}/refresh-token`, {
-          accessToken,
-          refreshToken,
-        });
+      const user = localStorage.getItem("user");
 
-        console.log(data);
-      } catch (err) {
-        console.log(err);
+      if (user) {
+        try {
+          const accessToken = JSON.parse(user)?.data?.accessToken;
+          const refreshToken = JSON.parse(user)?.data?.refreshToken;
+
+          const response = await instance.post(
+            `${API_ACCOUNT_URL}/refresh-token`,
+            {
+              accessToken,
+              refreshToken,
+            }
+          );
+
+          const { data } = response;
+
+          localStorage.setItem("user", JSON.stringify(data));
+
+          originalRequest.headers.Authorization = `Bearer ${data?.accessToken}`;
+
+          return instance(originalRequest);
+        } catch (err) {
+          window.location.href = "/";
+        }
       }
     }
 
-    return config;
-  },
-  (err) => {}
+    return Promise.reject(error);
+  }
 );
 
 export default instance;
