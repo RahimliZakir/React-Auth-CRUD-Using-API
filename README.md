@@ -4,3 +4,4 @@ In this project I've used ↓
 - "Formik" & "React Hook Form" libraries for form validation.
 - Custom "useAuth" hook for authentication stuff.
 - Custom "RouteGurad" component for  "Private Route" logic.
+- "React Router DOM" v6. library for routing.
