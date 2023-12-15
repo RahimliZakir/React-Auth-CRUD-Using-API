@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
@@ -25,6 +25,13 @@ const SignIn = () => {
     },
   });
 
+  const [hasChanged, setHasChanged] = useState({});
+
+  const handleFieldChange = (fieldName, e) => {
+    setHasChanged({ ...hasChanged, [fieldName]: true });
+    formik.handleChange(fieldName, e.target.value);
+  };
+
   return (
     <Container>
       <Row className="vh-100 align-items-center justify-content-center">
@@ -40,20 +47,23 @@ const SignIn = () => {
               onBlur={formik.handleBlur}
               value={formik.values.username}
             />
-            {formik.touched.username && formik.errors.username && (
-              <div className="text-danger mb-2">{formik.errors.username}</div>
-            )}
+            {/* 1st way - Validation between values */}
+            {formik.initialValues.username !== formik.values.username &&
+              formik.errors.username && (
+                <div className="text-danger mb-2">{formik.errors.username}</div>
+              )}
 
             <input
               type="password"
-              className="form-control  mb-2"
+              className="form-control mb-2"
               placeholder="password"
               name="password"
-              onChange={formik.handleChange}
+              onChange={(e) => handleFieldChange("password", e)}
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
-            {formik.touched.password && formik.errors.password && (
+            {/* 2nd way - Validation with state and function */}
+            {hasChanged.password && formik.errors.password && (
               <div className="text-danger mb-2">{formik.errors.password}</div>
             )}
 
