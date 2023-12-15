@@ -9,12 +9,16 @@ import { createBus, updateBus } from "../store/buses";
 import ImageInput from "./core/ImageInput";
 
 const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
+  //* React-Hook-Form Lib.
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    //* Validate while "onChange" event.
+    mode: "onChange",
+  });
 
   const formRef = useRef(null);
 
@@ -86,19 +90,21 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
       <Modal.Body>
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
+            {/* 1st way - Validation & Error Message. */}
             <input
               type="text"
               className="form-control"
               placeholder="Company"
-              {...register("company", { required: true })}
+              {...register("company", {
+                required: "Company is required!",
+              })}
             />
             <small className="text-danger">
-              {errors.company?.type === "required" && (
-                <p role="alert">Bu xana doldurulmalıdır!</p>
-              )}
+              <p role="alert">{errors.company?.message}</p>
             </small>
           </div>
           <div className="form-group my-2">
+            {/* 2nd way - Validation & Error Message. */}
             <input
               type="text"
               className="form-control"
@@ -107,7 +113,7 @@ const CreateUpdate = ({ show, handleClose, componentName, item, setItem }) => {
             />
             <small className="text-danger">
               {errors.model?.type === "required" && (
-                <p role="alert">Bu xana doldurulmalıdır!</p>
+                <p role="alert">{errors.model?.message}</p>
               )}
             </small>
           </div>
