@@ -17,30 +17,18 @@ const Bus = lazy(() => import("./components/Bus"));
 const App = () => {
   return (
     <div className="App">
-      <Routes>
-        <Route
-          index
-          element={
-            <Suspense fallback={<Loader />}>
-              <SignIn />
-            </Suspense>
-          }
-        />
-        <Route
-          path="register"
-          element={
-            <Suspense fallback={<Loader />}>
-              <Register />
-            </Suspense>
-          }
-        />
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route index element={<SignIn />} />
+          <Route path="register" element={<Register />} />
 
-        <Route path="main" element={<Navbar />}>
-          <Route path="trucks" element={<RouteGuard component={Truck} />} />
-          <Route path="buses" element={<RouteGuard component={Bus} />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+          <Route path="main" element={<Navbar />}>
+            <Route path="trucks" element={<RouteGuard component={Truck} />} />
+            <Route path="buses" element={<RouteGuard component={Bus} />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Suspense>
 
       <ToastContainer />
     </div>

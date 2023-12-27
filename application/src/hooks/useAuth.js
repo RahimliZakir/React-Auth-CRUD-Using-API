@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import API from "../api";
 import { API_ACCOUNT_URL } from "../constants";
@@ -29,7 +30,11 @@ export const useAuth = () => {
     return API.post(`${API_URL}/signin`, formData)
       .then((resp) => {
         if (resp.status === 200) {
-          localStorage.setItem("user", JSON.stringify(resp.data));
+          // localStorage.setItem("user", JSON.stringify(resp.data));
+          Cookies.set("user", JSON.stringify(resp.data), {
+            secure: true,
+            sameSite: "strict",
+          });
           navigate("/main/trucks");
         }
 
@@ -44,16 +49,14 @@ export const useAuth = () => {
       });
   };
 
-  const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
-  };
-
   const hasToken = () => {
-    return localStorage.getItem("user") !== null;
+    // return localStorage.getItem("user") !== null;
+    return Cookies.get("user") !== undefined;
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    // localStorage.removeItem("user");
+    Cookies.remove("user");
 
     navigate("/");
   };
@@ -61,7 +64,6 @@ export const useAuth = () => {
   return {
     register,
     signIn,
-    getCurrentUser,
     hasToken,
     logout,
   };

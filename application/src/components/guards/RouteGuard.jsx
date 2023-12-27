@@ -1,20 +1,11 @@
-import React, { Suspense } from "react";
 import { Navigate } from "react-router-dom";
 
 import { useAuth } from "../../hooks/useAuth";
 
-import Loader from "../Loader";
-
 const RouteGuard = ({ component: Component }) => {
   const auth = useAuth();
 
-  return auth.hasToken() ? (
-    <Suspense fallback={<Loader />}>
-      <Component />
-    </Suspense>
-  ) : (
-    <Navigate to="/" />
-  );
+  return auth.hasToken() ? <Component /> : <Navigate to="/" />;
 };
 
 export default RouteGuard;
