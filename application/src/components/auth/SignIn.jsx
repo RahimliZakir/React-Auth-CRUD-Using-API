@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { useAuth } from "../../hooks/useAuth";
+import { useFieldValueChange } from "../../hooks/useFieldValueChange";
 
 const SignIn = () => {
   const auth = useAuth();
@@ -25,12 +26,7 @@ const SignIn = () => {
     },
   });
 
-  const [hasChanged, setHasChanged] = useState({});
-
-  const handleFieldChange = (fieldName, e) => {
-    setHasChanged({ ...hasChanged, [fieldName]: true });
-    formik.handleChange(fieldName)(e.target.value);
-  };
+  const [handleFieldValueChange, hasChanged] = useFieldValueChange(formik);
 
   return (
     <Container>
@@ -58,7 +54,7 @@ const SignIn = () => {
               className="form-control mb-2"
               placeholder="password"
               name="password"
-              onChange={(e) => handleFieldChange("password", e)}
+              onChange={(e) => handleFieldValueChange("password", e)}
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
