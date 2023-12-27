@@ -9,22 +9,20 @@ export const useAuth = () => {
 
   const navigate = useNavigate();
 
-  const register = (formData) => {
-    return API.post(`${API_URL}/register`, formData)
-      .then((resp) => {
-        if (resp.status === 200) {
-          navigate("/");
-        }
-
-        return resp.data;
-      })
-      .catch((err) => {
-        if (err.response) {
-          toast.error(err.response.data.message, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          });
-        } else console.log(err);
-      });
+  const register = async (formData) => {
+    try {
+      const resp = await API.post(`${API_URL}/register`, formData);
+      if (resp.status === 200) {
+        navigate("/");
+      }
+      return resp.data;
+    } catch (err) {
+      if (err.response) {
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      } else console.log(err);
+    }
   };
 
   const signIn = (formData) => {
