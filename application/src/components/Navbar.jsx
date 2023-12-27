@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 import { routes } from "../routes";
-import { useCapitalize } from "../hooks/useCapitalize";
+import { useCapitalize } from "../utils/useCapitalize";
 import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {

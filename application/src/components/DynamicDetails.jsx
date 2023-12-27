@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useFormatDate } from "../hooks/useFormatDate";
+import { useFormatDate } from "../utils/useFormatDate";
 
 const DynamicDetails = ({ show, handleClose, data }) => {
   const formatDate = useFormatDate();

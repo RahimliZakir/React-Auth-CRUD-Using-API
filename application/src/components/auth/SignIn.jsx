@@ -29,7 +29,7 @@ const SignIn = () => {
 
   const handleFieldChange = (fieldName, e) => {
     setHasChanged({ ...hasChanged, [fieldName]: true });
-    formik.handleChange(fieldName, e.target.value);
+    formik.handleChange(fieldName)(e.target.value);
   };
 
   return (
