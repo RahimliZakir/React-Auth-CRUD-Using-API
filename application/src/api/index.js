@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
+import { cookies } from "../cookies";
 
 import { API_URL, API_ACCOUNT_URL } from "../constants";
 
@@ -10,7 +10,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     // const user = localStorage.getItem("user");
-    const user = Cookies.get("user");
+    const user = cookies.get("user");
 
     if (user) {
       const token = JSON.parse(user)?.data?.accessToken;
@@ -31,7 +31,7 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
 
       // const user = localStorage.getItem("user");
-      const user = Cookies.get("user");
+      const user = cookies.get("user");
 
       if (user) {
         try {
@@ -48,7 +48,7 @@ instance.interceptors.response.use(
 
           const { data } = response;
 
-          Cookies.set("user", JSON.stringify(data));
+          cookies.set("user", JSON.stringify(data));
 
           originalRequest.headers.Authorization = `Bearer ${data?.accessToken}`;
 
